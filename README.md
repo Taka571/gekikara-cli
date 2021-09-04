@@ -1,7 +1,9 @@
 # gekikara-cli
 胃腸を燃やしたい人のためのCLI
 # Usage
-`$ go build -o $GOPATH/bin/gekikara`　　
+`$ export GCP_API_KEY='your key'`(Geocoding API & Places API)  
+
+`$ go build -o $GOPATH/bin/gekikara`　
 
 `$ gekikara ls どこか` (alias: list)
 
