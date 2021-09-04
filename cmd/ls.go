@@ -28,8 +28,9 @@ import (
 
 // lsCmd represents the ls command
 var lsCmd = &cobra.Command{
-	Use:   "ls",
-	Short: "List up to 20 restaurants from the desired address.",
+	Use:     "ls",
+	Aliases: []string{"list"},
+	Short:   "List up to 20 restaurants from the desired address.",
 	Long: `List up to 20 restaurants from the desired address.
 For example: $ gekikara ls 渋谷駅`,
 	Run: func(cmd *cobra.Command, args []string) {
