@@ -30,9 +30,9 @@ import (
 var lsCmd = &cobra.Command{
 	Use:     "ls",
 	Aliases: []string{"list"},
+	Example: "$ gekikara ls 渋谷駅",
 	Short:   "List up to 20 restaurants from the desired address.",
-	Long: `List up to 20 restaurants from the desired address.
-For example: $ gekikara ls 渋谷駅`,
+	Long:    "List up to 20 restaurants from the desired address.",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) < 1 {
 			fmt.Println("Please specify address.")
