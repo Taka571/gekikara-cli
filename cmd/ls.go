@@ -32,6 +32,7 @@ var lsCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(lsCmd)
 	lsCmd.Flags().StringP("filter", "f", "", "Additional keyword filter.")
+	lsCmd.Flags().UintP("radius", "r", 1000, "Distance (in meters) from specified address. Default 1000. Maximum 50000.")
 
 	// Here you will define your flags and configuration settings.
 
@@ -65,9 +66,12 @@ func listUpGekikara(cmd *cobra.Command, address string) {
 	if filter != "" {
 		keyword = "\"" + keyword + filter + "\""
 	}
+
+	radius, _ := cmd.Flags().GetUint("radius")
+
 	nearbySearchReq := maps.NearbySearchRequest{
 		Location: &geocodingRes[0].Geometry.Location,
-		Radius:   1000,
+		Radius:   radius,
 		Keyword:  keyword,
 		Language: "ja",
 		Type:     "restaurant",
