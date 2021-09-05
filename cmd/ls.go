@@ -24,13 +24,14 @@ var lsCmd = &cobra.Command{
 		} else if len(args) > 1 {
 			fmt.Println("Too many args.")
 		} else {
-			listUpGekikara(args[0])
+			listUpGekikara(cmd, args[0])
 		}
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(lsCmd)
+	lsCmd.Flags().StringP("filter", "f", "", "Additional keyword filter.")
 
 	// Here you will define your flags and configuration settings.
 
@@ -43,7 +44,7 @@ func init() {
 	// lsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func listUpGekikara(address string) {
+func listUpGekikara(cmd *cobra.Command, address string) {
 	client, err := maps.NewClient(maps.WithAPIKey(os.Getenv("GCP_API_KEY")))
 	if err != nil {
 		log.Fatalf("fatal error: %s", err)
@@ -59,10 +60,15 @@ func listUpGekikara(address string) {
 		log.Fatalf("fatal error: %s", err)
 	}
 
+	var keyword string = "激辛"
+	filter, _ := cmd.Flags().GetString("filter")
+	if filter != "" {
+		keyword = "\"" + keyword + filter + "\""
+	}
 	nearbySearchReq := maps.NearbySearchRequest{
 		Location: &geocodingRes[0].Geometry.Location,
 		Radius:   1000,
-		Keyword:  "激辛",
+		Keyword:  keyword,
 		Language: "ja",
 		Type:     "restaurant",
 	}
